@@ -4,7 +4,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.3
-Release:	0.1.20100507svn159%{?dist}
+Release:	0.2.20100507svn159%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -29,7 +29,6 @@ Requires:	erlang-syntax_tools
 Requires:	erlang-xmerl
 %endif
 Provides:	%{realname} = %{version}-%{release}
-%{?__erlang_provides_requires: %{__erlang_provides_requires}}%{!?__erlang_provides_requires:Requires: erlang}
 
 %description
 An Erlang library for building lightweight HTTP servers.
@@ -100,6 +99,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/erlang/lib/%{realname}-%{version}/scripts
 
 %changelog
+* Mon Jun  7 2010 Peter Lemenkov <lemenkov@gmail.com> 1.3-0.2.20100507svn159
+- Removed accidentally added macro
+
 * Mon May 31 2010 Peter Lemenkov <lemenkov@gmail.com> 1.3-0.1.20100507svn159
 - New pre-release version (from VCS).
 
