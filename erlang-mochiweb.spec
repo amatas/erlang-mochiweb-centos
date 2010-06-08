@@ -4,14 +4,15 @@
 
 Name:		erlang-%{realname}
 Version:	1.3
-Release:	0.2.20100507svn159%{?dist}
+Release:	0.3.20100507svn159%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
-## svn export -r 159 http://mochiweb.googlecode.com/svn/trunk/ erlang-mochiweb-1.3
-## tar cfz erlang-mochiweb-1.3.tar.gz erlang-mochiweb-1.3
 URL:		http://code.google.com/p/mochiweb/
-Source:		%{name}-%{version}.tar.gz
+## svn export -r 97 http://mochiweb.googlecode.com/svn/trunk/ erlang-mochiweb-1.3
+## tar cfz erlang-mochiweb-1.3.tar.gz erlang-mochiweb-1.3
+Source0:	%{name}-%{version}.tar.gz
+Patch1:		erlang-mochiweb-0001-Fix-for-EPEL-5-erlang-R12B-5.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:	erlang
 %if 0%{?el5}
@@ -36,10 +37,19 @@ An Erlang library for building lightweight HTTP servers.
 
 %prep
 %setup -q
+%if 0%{?el5}
+%patch1 -p1 -b .epel
+touch -r src/mochiglobal.erl.epel src/mochiglobal.erl
+touch -r src/mochiweb.app.src.epel src/mochiweb.app.src
+%endif
 chmod 755 scripts/new_mochiweb.erl
 
 
 %build
+%if 0%{?el5}
+# required on EPEL to suppress failures while autogenerating with old erlang
+cp -arv src/mochiweb.app.src ebin/mochiweb.app
+%endif
 make %{?_smp_mflags}
 
 
@@ -53,6 +63,15 @@ install -m 644 ebin/*.beam $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{ve
 # skeleton files
 cp -arv priv $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
 cp -arv scripts $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
+cp -arv support $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
+
+%check
+%if 0%{?el5}
+echo "Does not supported currently due to old erlang"
+%else
+make test
+%endif
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -97,8 +116,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/reloader.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/priv
 %{_libdir}/erlang/lib/%{realname}-%{version}/scripts
+%{_libdir}/erlang/lib/%{realname}-%{version}/support
+
 
 %changelog
+* Mon Jun  7 2010 Peter Lemenkov <lemenkov@gmail.com> 1.3-0.3.20100507svn159
+- Added %%check target and fixed mochiweb:test()
+- Fix EL-5 build
+
 * Mon Jun  7 2010 Peter Lemenkov <lemenkov@gmail.com> 1.3-0.2.20100507svn159
 - Removed accidentally added macro
 
