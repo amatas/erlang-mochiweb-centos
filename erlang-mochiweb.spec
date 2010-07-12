@@ -4,7 +4,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.3
-Release:	0.3.20100507svn159%{?dist}
+Release:	0.4.20100507svn159%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -13,11 +13,9 @@ URL:		http://code.google.com/p/mochiweb/
 ## tar cfz erlang-mochiweb-1.3.tar.gz erlang-mochiweb-1.3
 Source0:	%{name}-%{version}.tar.gz
 Patch1:		erlang-mochiweb-0001-Fix-for-EPEL-5-erlang-R12B-5.patch
+Patch2:		erlang-mochiweb-0002-Fix-for-Erlang-OTP-R14A.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:	erlang
-%if 0%{?el5}
-Requires:	erlang
-%else
 Requires:	erlang-compiler
 Requires:	erlang-crypto
 Requires:	erlang-erts
@@ -28,7 +26,6 @@ Requires:	erlang-ssl
 Requires:	erlang-stdlib
 Requires:	erlang-syntax_tools
 Requires:	erlang-xmerl
-%endif
 Provides:	%{realname} = %{version}-%{release}
 
 %description
@@ -42,6 +39,7 @@ An Erlang library for building lightweight HTTP servers.
 touch -r src/mochiglobal.erl.epel src/mochiglobal.erl
 touch -r src/mochiweb.app.src.epel src/mochiweb.app.src
 %endif
+%patch2 -p1 -b .R14A
 chmod 755 scripts/new_mochiweb.erl
 
 
@@ -120,6 +118,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jul 12 2010 Peter Lemenkov <lemenkov@gmail.com> 1.3-0.4.20100507svn159
+- Rebuild with new Erlang
+- Simplified spec-file
+
 * Mon Jun  7 2010 Peter Lemenkov <lemenkov@gmail.com> 1.3-0.3.20100507svn159
 - Added %%check target and fixed mochiweb:test()
 - Fix EL-5 build

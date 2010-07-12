@@ -1,0 +1,25 @@
+From 8a4b8f664668104c8d8cba28a8c8da5991464f4d Mon Sep 17 00:00:00 2001
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Mon, 12 Jul 2010 14:12:18 +0400
+Subject: [PATCH 2/2] Fix for Erlang/OTP R14A
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+---
+ src/mochiweb_socket_server.erl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/src/mochiweb_socket_server.erl b/src/mochiweb_socket_server.erl
+index aee0e91..b393dbe 100644
+--- a/src/mochiweb_socket_server.erl
++++ b/src/mochiweb_socket_server.erl
+@@ -103,6 +103,7 @@ start_server(State=#mochiweb_socket_server{ssl=Ssl, name=Name}) ->
+     case Ssl of
+         true ->
+             application:start(crypto),
++            application:start(public_key),
+             application:start(ssl);
+         false ->
+             void
+-- 
+1.7.1.1
+
