@@ -1,7 +1,7 @@
-From 8a4b8f664668104c8d8cba28a8c8da5991464f4d Mon Sep 17 00:00:00 2001
+From 750019901d43fe84dbe7920586faff7b06d230d2 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Mon, 12 Jul 2010 14:12:18 +0400
-Subject: [PATCH 2/2] Fix for Erlang/OTP R14A
+Subject: [PATCH 1/5] Fix for Erlang/OTP R14A
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 ---

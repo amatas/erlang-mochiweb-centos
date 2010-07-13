@@ -4,7 +4,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.3
-Release:	0.4.20100507svn159%{?dist}
+Release:	0.5.20100507svn159%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -12,8 +12,11 @@ URL:		http://code.google.com/p/mochiweb/
 ## svn export -r 97 http://mochiweb.googlecode.com/svn/trunk/ erlang-mochiweb-1.3
 ## tar cfz erlang-mochiweb-1.3.tar.gz erlang-mochiweb-1.3
 Source0:	%{name}-%{version}.tar.gz
-Patch1:		erlang-mochiweb-0001-Fix-for-EPEL-5-erlang-R12B-5.patch
-Patch2:		erlang-mochiweb-0002-Fix-for-Erlang-OTP-R14A.patch
+Patch1:		erlang-mochiweb-0001-Fix-for-Erlang-OTP-R14A.patch
+Patch2:		erlang-mochiweb-0002-The-term-boolean-isn-t-availabie-in-R12B5.patch
+Patch3:		erlang-mochiweb-0003-No-erlang-min-A-B-in-R12B-5-and-below.patch
+Patch4:		erlang-mochiweb-0004-No-such-function-erl_scan-string-3-in-R12B5.patch
+Patch5:		erlang-mochiweb-0005-No-such-function-lists-keyfind-3-in-R12B5-use-lists-.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:	erlang
 Requires:	erlang-compiler
@@ -34,20 +37,18 @@ An Erlang library for building lightweight HTTP servers.
 
 %prep
 %setup -q
+%patch1 -p1 -b .R14A
 %if 0%{?el5}
-%patch1 -p1 -b .epel
-touch -r src/mochiglobal.erl.epel src/mochiglobal.erl
-touch -r src/mochiweb.app.src.epel src/mochiweb.app.src
+# Erlang/OTP R12B5
+%patch2 -p1 -b .no-boolean
+%patch3 -p1 -b .no-erlang-min-2
+%patch4 -p1 -b .no-erl_scan-string-3
+%patch5 -p1 -b .no-lists-keyfind-3
 %endif
-%patch2 -p1 -b .R14A
 chmod 755 scripts/new_mochiweb.erl
 
 
 %build
-%if 0%{?el5}
-# required on EPEL to suppress failures while autogenerating with old erlang
-cp -arv src/mochiweb.app.src ebin/mochiweb.app
-%endif
 make %{?_smp_mflags}
 
 
@@ -65,7 +66,7 @@ cp -arv support $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
 
 %check
 %if 0%{?el5}
-echo "Does not supported currently due to old erlang"
+echo "Mochiweb cannot pass self-tests (currently) due to old ssl in Erlang/OTP R12B5 - I'm working on it"
 %else
 make test
 %endif
@@ -118,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jul 13 2010 Peter Lemenkov <lemenkov@gmail.com> 1.3-0.5.20100507svn159
+- Fixed several tests on EL-5 (enough to allow CouchDB to pass its own self-tests)
+
 * Mon Jul 12 2010 Peter Lemenkov <lemenkov@gmail.com> 1.3-0.4.20100507svn159
 - Rebuild with new Erlang
 - Simplified spec-file

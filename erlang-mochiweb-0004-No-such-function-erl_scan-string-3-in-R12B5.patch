@@ -1,0 +1,26 @@
+From 11f55e38e4bff9ad2784b2b7e6c4c035afbb5fa3 Mon Sep 17 00:00:00 2001
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Tue, 13 Jul 2010 15:13:57 +0400
+Subject: [PATCH 4/5] No such function - erl_scan:string/3 in R12B5
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+---
+ support/make_app.escript |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/support/make_app.escript b/support/make_app.escript
+index 0d0b84b..86519fb 100755
+--- a/support/make_app.escript
++++ b/support/make_app.escript
+@@ -27,7 +27,7 @@ write_app(F, Comments, TermL, App) ->
+ parse_appsrc(F) ->
+     case file:read_file(F) of
+         {ok, B} ->
+-            case erl_scan:string(binary_to_list(B), 1, [return_comments]) of
++            case erl_scan:string(binary_to_list(B), 1) of
+                 {ok, Toks, _} ->
+                     Comments = lists:takewhile(
+                                  fun({comment,_,_}) -> true;
+-- 
+1.7.1.1
+
