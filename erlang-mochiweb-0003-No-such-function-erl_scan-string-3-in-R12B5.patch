@@ -1,7 +1,7 @@
-From 11f55e38e4bff9ad2784b2b7e6c4c035afbb5fa3 Mon Sep 17 00:00:00 2001
+From f95a72d3f13844b8d673f8dec1d397c400030c63 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:13:57 +0400
-Subject: [PATCH 4/5] No such function - erl_scan:string/3 in R12B5
+Subject: [PATCH 3/5] No such function - erl_scan:string/3 in R12B5
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 ---
@@ -22,5 +22,5 @@ index 0d0b84b..86519fb 100755
                      Comments = lists:takewhile(
                                   fun({comment,_,_}) -> true;
 -- 
-1.7.1.1
+1.7.2.1
 

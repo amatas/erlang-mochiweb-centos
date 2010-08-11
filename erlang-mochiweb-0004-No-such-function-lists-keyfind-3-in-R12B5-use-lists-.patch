@@ -1,13 +1,14 @@
-From 09d14bc23b5b7dd28a1ea1dad431b2d74ea7b566 Mon Sep 17 00:00:00 2001
+From ac87470246b571d4e7852c2c5af8dba12be6042d Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:16:13 +0400
-Subject: [PATCH 5/5] No such function lists:keyfind/3 in R12B5 - use lists:keysearch/3 instead
+Subject: [PATCH 4/5] No such function lists:keyfind/3 in R12B5 - use lists:keysearch/3 instead
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 ---
  src/mochilists.erl       |    6 +++---
+ src/reloader.erl         |    4 ++--
  support/make_app.escript |    8 ++++----
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/src/mochilists.erl b/src/mochilists.erl
 index 8981e7b..6138acf 100644
@@ -35,6 +36,21 @@ index 8981e7b..6138acf 100644
              Value
      end.
  
+diff --git a/src/reloader.erl b/src/reloader.erl
+index c0f5de8..4d5c0b3 100644
+--- a/src/reloader.erl
++++ b/src/reloader.erl
+@@ -103,8 +103,8 @@ module_vsn({M, Beam, _Fn}) ->
+     {ok, {M, Vsn}} = beam_lib:version(Beam),
+     Vsn;
+ module_vsn(L) when is_list(L) ->
+-    {_, Attrs} = lists:keyfind(attributes, 1, L),
+-    {_, Vsn} = lists:keyfind(vsn, 1, Attrs),
++    {value, {_, Attrs}} = lists:keysearch(attributes, 1, L),
++    {value, {_, Vsn}} = lists:keysearch(vsn, 1, Attrs),
+     Vsn.
+ 
+ doit(From, To) ->
 diff --git a/support/make_app.escript b/support/make_app.escript
 index 86519fb..65a5b0b 100755
 --- a/support/make_app.escript
@@ -65,5 +81,5 @@ index 86519fb..65a5b0b 100755
      end.
  
 -- 
-1.7.1.1
+1.7.2.1
 
