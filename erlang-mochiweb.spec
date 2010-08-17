@@ -4,7 +4,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.3
-Release:	0.6.20100724git9a53dbd7%{?dist}
+Release:	0.7.20100724git9a53dbd7%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -16,6 +16,7 @@ Patch2:		erlang-mochiweb-0002-No-erlang-min-A-B-in-R12B-5-and-below.patch
 Patch3:		erlang-mochiweb-0003-No-such-function-erl_scan-string-3-in-R12B5.patch
 Patch4:		erlang-mochiweb-0004-No-such-function-lists-keyfind-3-in-R12B5-use-lists-.patch
 Patch5:		erlang-mochiweb-0005-Fixed-ssl-related-tests-on-R12B-requires-ssl-example.patch
+Patch6:		erlang-mochiweb-0006-Fix-improper-conversion-from-int-to-string-should-be.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:	erlang
 Requires:	erlang-compiler
@@ -44,6 +45,7 @@ An Erlang library for building lightweight HTTP servers.
 %patch4 -p1 -b .no-lists-keyfind-3
 %patch5 -p1 -b .fix_for_ssl_cacert
 %endif
+%patch6 -p1 -b .fix_int_to_string
 chmod 755 scripts/new_mochiweb.erl
 
 
@@ -116,6 +118,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 17 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.3-0.7.20100724git9a53dbd7
+- Fix improper int to string conversion
+
 * Wed Aug 11 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.3-0.6.20100724git9a53dbd7
 - Fixed all tests on EL-5
 - New git snapshot

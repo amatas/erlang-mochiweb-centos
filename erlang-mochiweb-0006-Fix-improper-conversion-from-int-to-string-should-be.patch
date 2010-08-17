@@ -1,0 +1,26 @@
+From 70765c74292adedfa7f91fb41f864db719484c73 Mon Sep 17 00:00:00 2001
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Tue, 17 Aug 2010 14:02:17 +0400
+Subject: [PATCH 6/6] Fix improper conversion from int to string (should be string to int)
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+---
+ src/mochiweb_socket_server.erl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/mochiweb_socket_server.erl b/src/mochiweb_socket_server.erl
+index 1aae09a..774fee7 100644
+--- a/src/mochiweb_socket_server.erl
++++ b/src/mochiweb_socket_server.erl
+@@ -123,7 +123,7 @@ start_server(State=#mochiweb_socket_server{ssl=Ssl, name=Name}) ->
+ ensure_int(N) when is_integer(N) ->
+     N;
+ ensure_int(S) when is_list(S) ->
+-    integer_to_list(S).
++    list_to_integer(S).
+ 
+ ipv6_supported() ->
+     case (catch inet:getaddr("localhost", inet6)) of
+-- 
+1.7.2.1
+

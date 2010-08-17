@@ -1,7 +1,7 @@
 From ac87470246b571d4e7852c2c5af8dba12be6042d Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:16:13 +0400
-Subject: [PATCH 4/5] No such function lists:keyfind/3 in R12B5 - use lists:keysearch/3 instead
+Subject: [PATCH 4/6] No such function lists:keyfind/3 in R12B5 - use lists:keysearch/3 instead
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 ---
