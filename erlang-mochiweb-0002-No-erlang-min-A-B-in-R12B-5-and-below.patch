@@ -1,7 +1,7 @@
-From 1351b93356bb540f7211fdbb7191961a45e3be89 Mon Sep 17 00:00:00 2001
+From 24c87cef7767f2b8c42f37cbd45078f3366a0083 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:10:42 +0400
-Subject: [PATCH 2/6] No erlang:min(A,B) in R12B-5 and below
+Subject: [PATCH 2/5] No erlang:min(A,B) in R12B-5 and below
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 ---
@@ -25,5 +25,5 @@ index 3118028..0e8fedb 100644
      drain_reply(SockFun, Length - Sz, <<Acc/bytes, B/bytes>>).
  
 -- 
-1.7.2.1
+1.7.2.3
 

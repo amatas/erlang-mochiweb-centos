@@ -1,7 +1,7 @@
-From 0b6e3ffcdb617945fbfb74787b57b95b0198f8b2 Mon Sep 17 00:00:00 2001
+From 41ac5d4139d51135eae4fb79208b1ce3ab69ee38 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 10 Aug 2010 16:10:45 +0400
-Subject: [PATCH 5/6] Fixed ssl-related tests on R12B (requires ssl/examples from Erlang/OTP)
+Subject: [PATCH 5/5] Fixed ssl-related tests on R12B (requires ssl/examples from Erlang/OTP)
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 ---
@@ -94,5 +94,5 @@ index 3069cf4..8f37196 100644
              {ok, {ssl, SslSocket}}
      end,
 -- 
-1.7.2.1
+1.7.2.3
 

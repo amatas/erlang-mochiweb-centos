@@ -1,7 +1,7 @@
-From 1868a3947adc52aafd27036fc28ae1c459bf5d08 Mon Sep 17 00:00:00 2001
+From a7fa787dcdea3336dcc65983f6cd497d41879458 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:09:50 +0400
-Subject: [PATCH 1/6] The term boolean isn't availabie in R12B5
+Subject: [PATCH 1/5] The term boolean isn't availabie in R12B5
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 ---
@@ -22,5 +22,5 @@ index c740b87..ec4668e 100644
  delete(K) ->
      delete(K, key_to_module(K)).
 -- 
-1.7.2.1
+1.7.2.3
 

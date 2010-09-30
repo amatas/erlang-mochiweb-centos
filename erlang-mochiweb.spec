@@ -1,24 +1,25 @@
 %global debug_package %{nil}
 %global realname mochiweb
+%global git_tag  47fe37b
 
 
 Name:		erlang-%{realname}
 Version:	1.3
-Release:	0.7.20100724git9a53dbd7%{?dist}
+Release:	0.8.20100929git%{git_tag}%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
 URL:		http://github.com/mochi/mochiweb
-# wget http://github.com/mochi/mochiweb/tarball/9a53dbd7b2c52eb5b9d4e90088ab471cac7b8ae9 -O erlang-mochiweb-1.3.tar.gz
-Source0:	%{name}-%{version}.tar.gz
+# wget wget http://github.com/mochi/mochiweb/tarball/9687b40
+Source0:	mochi-%{realname}-%{git_tag}.tar.gz
 Patch1:		erlang-mochiweb-0001-The-term-boolean-isn-t-availabie-in-R12B5.patch
 Patch2:		erlang-mochiweb-0002-No-erlang-min-A-B-in-R12B-5-and-below.patch
 Patch3:		erlang-mochiweb-0003-No-such-function-erl_scan-string-3-in-R12B5.patch
 Patch4:		erlang-mochiweb-0004-No-such-function-lists-keyfind-3-in-R12B5-use-lists-.patch
 Patch5:		erlang-mochiweb-0005-Fixed-ssl-related-tests-on-R12B-requires-ssl-example.patch
-Patch6:		erlang-mochiweb-0006-Fix-improper-conversion-from-int-to-string-should-be.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-BuildRequires:	erlang
+BuildRequires:	erlang-erts
+BuildRequires:	erlang-eunit
 Requires:	erlang-compiler
 Requires:	erlang-crypto
 Requires:	erlang-erts
@@ -31,12 +32,13 @@ Requires:	erlang-syntax_tools
 Requires:	erlang-xmerl
 Provides:	%{realname} = %{version}-%{release}
 
+
 %description
 An Erlang library for building lightweight HTTP servers.
 
 
 %prep
-%setup -q -n mochi-mochiweb-9a53dbd
+%setup -q -n mochi-%{realname}-%{git_tag}
 %if 0%{?el5}
 # Erlang/OTP R12B5
 %patch1 -p1 -b .no-boolean
@@ -45,7 +47,6 @@ An Erlang library for building lightweight HTTP servers.
 %patch4 -p1 -b .no-lists-keyfind-3
 %patch5 -p1 -b .fix_for_ssl_cacert
 %endif
-%patch6 -p1 -b .fix_int_to_string
 chmod 755 scripts/new_mochiweb.erl
 
 
@@ -118,6 +119,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Sep 29 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.3-0.8.20100929git9687b40
+- Narrowed BuildRequires
+- Restricted explicit requirement for obsoleted fd_server module (rhbz #601152)
+- Dropped upstreamed patch6
+
 * Tue Aug 17 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.3-0.7.20100724git9a53dbd7
 - Fix improper int to string conversion
 

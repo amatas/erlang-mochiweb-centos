@@ -1,7 +1,7 @@
-From f95a72d3f13844b8d673f8dec1d397c400030c63 Mon Sep 17 00:00:00 2001
+From c66f2bdfad96603a61cfca9e17917e3373440fc2 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:13:57 +0400
-Subject: [PATCH 3/6] No such function - erl_scan:string/3 in R12B5
+Subject: [PATCH 3/5] No such function - erl_scan:string/3 in R12B5
 
 Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
  1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/support/make_app.escript b/support/make_app.escript
-index 0d0b84b..86519fb 100755
+index f56ff34..973dde9 100755
 --- a/support/make_app.escript
 +++ b/support/make_app.escript
 @@ -27,7 +27,7 @@ write_app(F, Comments, TermL, App) ->
@@ -22,5 +22,5 @@ index 0d0b84b..86519fb 100755
                      Comments = lists:takewhile(
                                   fun({comment,_,_}) -> true;
 -- 
-1.7.2.1
+1.7.2.3
 
