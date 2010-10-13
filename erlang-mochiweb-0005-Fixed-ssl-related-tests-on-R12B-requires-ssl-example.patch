@@ -1,4 +1,4 @@
-From 41ac5d4139d51135eae4fb79208b1ce3ab69ee38 Mon Sep 17 00:00:00 2001
+From 21ce1e2ac04d869887ec73f348b3bf08f9902330 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 10 Aug 2010 16:10:45 +0400
 Subject: [PATCH 5/5] Fixed ssl-related tests on R12B (requires ssl/examples from Erlang/OTP)

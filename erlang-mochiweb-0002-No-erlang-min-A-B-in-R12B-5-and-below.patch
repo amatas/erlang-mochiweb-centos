@@ -1,4 +1,4 @@
-From 24c87cef7767f2b8c42f37cbd45078f3366a0083 Mon Sep 17 00:00:00 2001
+From 7afdfcc29ffc6314f69a135b47238756b7d68d8f Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:10:42 +0400
 Subject: [PATCH 2/5] No erlang:min(A,B) in R12B-5 and below

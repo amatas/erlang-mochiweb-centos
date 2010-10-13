@@ -1,4 +1,4 @@
-From a7fa787dcdea3336dcc65983f6cd497d41879458 Mon Sep 17 00:00:00 2001
+From dba6f09a7e48173beeb91d164cd03eb35be38ec1 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:09:50 +0400
 Subject: [PATCH 1/5] The term boolean isn't availabie in R12B5

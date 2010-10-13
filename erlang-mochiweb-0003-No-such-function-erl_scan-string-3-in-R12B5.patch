@@ -1,4 +1,4 @@
-From c66f2bdfad96603a61cfca9e17917e3373440fc2 Mon Sep 17 00:00:00 2001
+From 5167b2ddccfc013b96f2140874578183bfa7c59d Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:13:57 +0400
 Subject: [PATCH 3/5] No such function - erl_scan:string/3 in R12B5

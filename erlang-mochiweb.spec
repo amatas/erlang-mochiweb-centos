@@ -1,17 +1,17 @@
 %global debug_package %{nil}
 %global realname mochiweb
-%global git_tag  47fe37b
+%global git_tag 32dc8be
 
 
 Name:		erlang-%{realname}
-Version:	1.3
-Release:	0.8.20100929git%{git_tag}%{?dist}
+Version:	1.4.0
+Release:	1%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
 URL:		http://github.com/mochi/mochiweb
-# wget wget http://github.com/mochi/mochiweb/tarball/9687b40
-Source0:	mochi-%{realname}-%{git_tag}.tar.gz
+# wget http://github.com/mochi/mochiweb/tarball/1.4.0
+Source0:	mochi-%{realname}-%{version}-0-g%{git_tag}.tar.gz
 Patch1:		erlang-mochiweb-0001-The-term-boolean-isn-t-availabie-in-R12B5.patch
 Patch2:		erlang-mochiweb-0002-No-erlang-min-A-B-in-R12B-5-and-below.patch
 Patch3:		erlang-mochiweb-0003-No-such-function-erl_scan-string-3-in-R12B5.patch
@@ -119,6 +119,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 13 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.4.0-1
+- Ver. 1.4.0
+
 * Wed Sep 29 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.3-0.8.20100929git9687b40
 - Narrowed BuildRequires
 - Restricted explicit requirement for obsoleted fd_server module (rhbz #601152)
