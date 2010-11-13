@@ -1,4 +1,4 @@
-From 41a6fd0fcaff8e32977399b9ec4c14de6a64a04d Mon Sep 17 00:00:00 2001
+From 127bccbf6411feb9ad2d938c3559975b09dad7b1 Mon Sep 17 00:00:00 2001
 From: Peter Lemenkov <lemenkov@gmail.com>
 Date: Tue, 13 Jul 2010 15:16:13 +0400
 Subject: [PATCH 4/5] No such function lists:keyfind/3 in R12B5 - use lists:keysearch/3 instead
@@ -52,13 +52,13 @@ index c0f5de8..4d5c0b3 100644
  
  doit(From, To) ->
 diff --git a/support/make_app.escript b/support/make_app.escript
-index 973dde9..1702265 100755
+index dab193a..8a17778 100755
 --- a/support/make_app.escript
 +++ b/support/make_app.escript
 @@ -64,20 +64,20 @@ write_term(T, L0, TermL, Fd) ->
      io:fwrite(Fd, "~p.~n", [T]).
  
- vsn(Vsn, Attrs) when Vsn =:= '' orelse Vsn =:= "" ->
+ vsn(Vsn, Attrs) when Vsn =:= '' orelse Vsn =:= "" orelse Vsn =:= "_" ->
 -    case lists:keyfind(vsn, 1, Attrs) of
 +    case lists:keysearch(vsn, 1, Attrs) of
          false ->
@@ -81,5 +81,5 @@ index 973dde9..1702265 100755
      end.
  
 -- 
-1.7.2.3
+1.7.3.2
 

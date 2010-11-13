@@ -1,16 +1,16 @@
-%global debug_package %{nil}
 %global realname mochiweb
-%global git_tag 32dc8be
+%global debug_package %{nil}
+%global git_tag 80571b9
 
 
 Name:		erlang-%{realname}
-Version:	1.4.0
+Version:	1.4.1
 Release:	1%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
 URL:		http://github.com/mochi/mochiweb
-# wget http://github.com/mochi/mochiweb/tarball/1.4.0
+# wget --no-check-certificate https://github.com/mochi/mochiweb/tarball/1.4.1
 Source0:	mochi-%{realname}-%{version}-0-g%{git_tag}.tar.gz
 Patch1:		erlang-mochiweb-0001-The-term-boolean-isn-t-availabie-in-R12B5.patch
 Patch2:		erlang-mochiweb-0002-No-erlang-min-A-B-in-R12B-5-and-below.patch
@@ -60,6 +60,9 @@ rm -rf $RPM_BUILD_ROOT
 # base binary modules
 install -D -m 644 ebin/%{realname}.app $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/%{realname}.app
 install -m 644 ebin/*.beam $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/
+
+# Remove test file
+rm -f $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_request_tests.beam
 
 # skeleton files
 cp -arv priv $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
@@ -119,6 +122,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Nov 13 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.4.1-1
+- Ver. 1.4.1
+
 * Wed Oct 13 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.4.0-1
 - Ver. 1.4.0
 
