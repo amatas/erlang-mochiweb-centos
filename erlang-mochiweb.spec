@@ -5,7 +5,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.4.1
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -21,6 +21,7 @@ BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:	erlang-erts
 BuildRequires:	erlang-eunit
 BuildRequires:	erlang-tools
+BuildRequires:	erlang-xmerl
 Requires:	erlang-compiler
 Requires:	erlang-crypto
 Requires:	erlang-erts
@@ -123,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Nov 22 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.4.1-3
+- Added erlang-xmerl as BuildRequires
+
 * Mon Nov 22 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.4.1-2
 - Added accidentally removed dependency required for %%check
 
