@@ -5,7 +5,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.4.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -20,6 +20,7 @@ Patch5:		erlang-mochiweb-0005-Fixed-ssl-related-tests-on-R12B-requires-ssl-examp
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires:	erlang-erts
 BuildRequires:	erlang-eunit
+BuildRequires:	erlang-tools
 Requires:	erlang-compiler
 Requires:	erlang-crypto
 Requires:	erlang-erts
@@ -122,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Nov 22 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.4.1-2
+- Added accidentally removed dependency required for %%check
+
 * Sat Nov 13 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.4.1-1
 - Ver. 1.4.1
 
