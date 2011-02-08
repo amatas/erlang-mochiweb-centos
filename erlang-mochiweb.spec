@@ -5,7 +5,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.4.1
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -124,6 +124,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.1-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Mon Nov 22 2010 Peter Lemenkov <lemenkov@gmail.com> - 1.4.1-3
 - Added erlang-xmerl as BuildRequires
 
