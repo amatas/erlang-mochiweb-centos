@@ -5,7 +5,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.4.1
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -64,7 +64,7 @@ install -D -m 644 ebin/%{realname}.app $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{re
 install -m 644 ebin/*.beam $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/
 
 # Remove test file
-rm -f $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_request_tests.beam
+#rm -f $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_request_tests.beam
 
 # skeleton files
 cp -arv priv $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
@@ -111,6 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_mime.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_multipart.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_request.beam
+%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_request_tests.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_response.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_skel.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_socket.beam
@@ -124,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Apr 06 2011 Peter Lemenkov <lemenkov@gmail.com> - 1.4.1-5
+- Don't remove test-file (rhbz #675699)
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
