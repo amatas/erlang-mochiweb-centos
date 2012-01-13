@@ -5,7 +5,7 @@
 
 Name:		erlang-%{realname}
 Version:	1.4.1
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -125,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.1-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Wed Apr 06 2011 Peter Lemenkov <lemenkov@gmail.com> - 1.4.1-5
 - Don't remove test-file (rhbz #675699)
 
