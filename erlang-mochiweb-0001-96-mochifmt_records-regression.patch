@@ -1,0 +1,41 @@
+From 6d3d7901791417eaa7f17c81a8477210d0884ed0 Mon Sep 17 00:00:00 2001
+From: Bob Ippolito <bob@redivi.com>
+Date: Thu, 24 Jan 2013 12:58:14 -0800
+Subject: [PATCH 1/2] #96 - mochifmt_records regression
+
+---
+ CHANGES.md               | 5 +++++
+ src/mochifmt_records.erl | 4 ++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/CHANGES.md b/CHANGES.md
+index becdf3e..2114a57 100644
+--- a/CHANGES.md
++++ b/CHANGES.md
+@@ -1,3 +1,8 @@
++Version 2.4.1 released XXXX-XX-XX
++
++* Fixed issue in mochifmt_records introduced in v2.4.0
++  https://github.com/mochi/mochiweb/issues/96
++
+ Version 2.4.0 released 2013-01-23
+ 
+ * Switch from parameterized modules to explicit tuple module calls for
+diff --git a/src/mochifmt_records.erl b/src/mochifmt_records.erl
+index 65f942f..7d166ff 100644
+--- a/src/mochifmt_records.erl
++++ b/src/mochifmt_records.erl
+@@ -25,8 +25,8 @@ get_value(Key, Rec, {?MODULE, Recs})
+         end
+     catch error:_ -> mochifmt:get_value(Key, Rec)
+     end;
+-get_value(Key, Args, {?MODULE, _Recs}=THIS) ->
+-    mochifmt:get_value(Key, Args, THIS).
++get_value(Key, Args, {?MODULE, _Recs}) ->
++    mochifmt:get_value(Key, Args).
+ 
+ get_rec_index(Atom, [Atom | _], Index) ->
+     Index;
+-- 
+1.8.1
+

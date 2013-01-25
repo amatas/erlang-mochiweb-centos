@@ -1,37 +1,36 @@
 %global realname mochiweb
+%global upstream mochi
 %global debug_package %{nil}
-%global git_tag 80571b9
+%global git_tag b02ea50
+%global patchnumber 0
 
 
 Name:		erlang-%{realname}
-Version:	1.4.1
-Release:	7%{?dist}
+Version:	2.4.0
+Release:	1%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
 URL:		http://github.com/mochi/mochiweb
-# wget --no-check-certificate https://github.com/mochi/mochiweb/tarball/1.4.1
-Source0:	mochi-%{realname}-%{version}-0-g%{git_tag}.tar.gz
-Patch1:		erlang-mochiweb-0001-The-term-boolean-isn-t-availabie-in-R12B5.patch
-Patch2:		erlang-mochiweb-0002-No-erlang-min-A-B-in-R12B-5-and-below.patch
-Patch3:		erlang-mochiweb-0003-No-such-function-erl_scan-string-3-in-R12B5.patch
-Patch4:		erlang-mochiweb-0004-No-such-function-lists-keyfind-3-in-R12B5-use-lists-.patch
-Patch5:		erlang-mochiweb-0005-Fixed-ssl-related-tests-on-R12B-requires-ssl-example.patch
-BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-BuildRequires:	erlang-erts
-BuildRequires:	erlang-eunit
-BuildRequires:	erlang-tools
+# wget --content-disposition https://github.com/mochi/mochiweb/tarball/2.4.0
+Source0:	%{upstream}-%{realname}-v%{version}-%{patchnumber}-g%{git_tag}.tar.gz
+# Backported from master
+Patch1:		erlang-mochiweb-0001-96-mochifmt_records-regression.patch
+# used in CouchDB, see https://github.com/mochi/mochiweb/issues/70
+Patch2:		erlang-mochiweb-0002-Fix-Mochiweb-acceptor-blocked-in-ssl-handshake.patch
+BuildRequires:	erlang-rebar
 BuildRequires:	erlang-xmerl
-Requires:	erlang-compiler
-Requires:	erlang-crypto
-Requires:	erlang-erts
-Requires:	erlang-eunit
-Requires:	erlang-inets
-Requires:	erlang-kernel
-Requires:	erlang-ssl
-Requires:	erlang-stdlib
-Requires:	erlang-syntax_tools
-Requires:	erlang-xmerl
+Requires:	erlang-compiler%{?_isa}
+Requires:	erlang-crypto%{?_isa}
+# Error:erlang(binary:match/2) in R13B ale earlier
+Requires:	erlang-erts%{?_isa} >= R14B
+Requires:	erlang-inets%{?_isa}
+Requires:	erlang-kernel%{?_isa}
+Requires:	erlang-ssl%{?_isa}
+# Error:erlang(unicode:characters_to_binary/1) in R12B and earlier
+Requires:	erlang-stdlib%{?_isa} >= R13B
+Requires:	erlang-syntax_tools%{?_isa}
+Requires:	erlang-xmerl%{?_isa}
 Provides:	%{realname} = %{version}-%{release}
 
 
@@ -40,25 +39,16 @@ An Erlang library for building lightweight HTTP servers.
 
 
 %prep
-%setup -q -n mochi-%{realname}-%{git_tag}
-%if 0%{?el5}
-# Erlang/OTP R12B5
-%patch1 -p1 -b .no-boolean
-%patch2 -p1 -b .no-erlang-min-2
-%patch3 -p1 -b .no-erl_scan-string-3
-%patch4 -p1 -b .no-lists-keyfind-3
-%patch5 -p1 -b .fix_for_ssl_cacert
-%endif
-chmod 755 scripts/new_mochiweb.erl
+%setup -q -n %{upstream}-%{realname}-%{git_tag}
+%patch1 -p1
+%patch2 -p1
 
 
 %build
-make %{?_smp_mflags}
+rebar compile -v
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 # base binary modules
 install -D -m 644 ebin/%{realname}.app $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/%{realname}.app
 install -m 644 ebin/*.beam $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/
@@ -67,21 +57,16 @@ install -m 644 ebin/*.beam $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{ve
 #rm -f $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_request_tests.beam
 
 # skeleton files
-cp -arv priv $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
 cp -arv scripts $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
 cp -arv support $RPM_BUILD_ROOT%{_libdir}/erlang/lib/%{realname}-%{version}
 
+
 %check
-make test
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
+rebar eunit -v
 
 
 %files
-%defattr(-,root,root,-)
-%doc LICENSE README examples
+%doc CHANGES.md LICENSE README examples
 %dir %{_libdir}/erlang/lib/%{realname}-%{version}
 %dir %{_libdir}/erlang/lib/%{realname}-%{version}/ebin
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochifmt.beam
@@ -99,7 +84,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb.app
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_acceptor.beam
-%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_app.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_charref.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_cookies.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_cover.beam
@@ -113,18 +97,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_request.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_request_tests.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_response.beam
-%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_skel.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_socket.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_socket_server.beam
-%{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_sup.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/mochiweb_util.beam
 %{_libdir}/erlang/lib/%{realname}-%{version}/ebin/reloader.beam
-%{_libdir}/erlang/lib/%{realname}-%{version}/priv
 %{_libdir}/erlang/lib/%{realname}-%{version}/scripts
 %{_libdir}/erlang/lib/%{realname}-%{version}/support
 
 
 %changelog
+* Fri Jan 25 2013 Peter Lemenkov <lemenkov@gmail.com> - 2.4.0-1
+- Ver. 2.4.0 (fix for Erlang R16)
+- Dropped patches for EL5 (Erlang R12B)
+
 * Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.4.1-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 

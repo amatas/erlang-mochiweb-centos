@@ -1,0 +1,82 @@
+From a79466f14c6cede7f74c13e7553e5f73353cff74 Mon Sep 17 00:00:00 2001
+From: Wei Cao <cyg.cao@gmail.com>
+Date: Thu, 16 Aug 2012 10:53:07 +0800
+Subject: [PATCH 2/2] Fix Mochiweb acceptor blocked in ssl handshake
+
+Acceptor cannot be recycled until ssl handshake is done,
+so it's possible and easy for all acceptors be blocked between the point
+where the new socket's connected and the ssl handshake is done.
+---
+ src/mochiweb_acceptor.erl |  7 ++++---
+ src/mochiweb_socket.erl   | 15 +++++++--------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/src/mochiweb_acceptor.erl b/src/mochiweb_acceptor.erl
+index efedfbd..c1192e2 100644
+--- a/src/mochiweb_acceptor.erl
++++ b/src/mochiweb_acceptor.erl
+@@ -18,13 +18,14 @@ init(Server, Listen, Loop) ->
+     case catch mochiweb_socket:accept(Listen) of
+         {ok, Socket} ->
+             gen_server:cast(Server, {accepted, self(), timer:now_diff(now(), T1)}),
+-            call_loop(Loop, Socket);
++            case mochiweb_socket:after_accept(Socket) of
++                ok -> call_loop(Loop, Socket);
++                {error, _} -> exit(normal)
++            end;
+         {error, closed} ->
+             exit(normal);
+         {error, timeout} ->
+             init(Server, Listen, Loop);
+-        {error, esslaccept} ->
+-            exit(normal);
+         Other ->
+             error_logger:error_report(
+               [{application, mochiweb},
+diff --git a/src/mochiweb_socket.erl b/src/mochiweb_socket.erl
+index 76b018c..ad27204 100644
+--- a/src/mochiweb_socket.erl
++++ b/src/mochiweb_socket.erl
+@@ -4,10 +4,11 @@
+ 
+ -module(mochiweb_socket).
+ 
+--export([listen/4, accept/1, recv/3, send/2, close/1, port/1, peername/1,
++-export([listen/4, accept/1, after_accept/1, recv/3, send/2, close/1, port/1, peername/1,
+          setopts/2, type/1]).
+ 
+ -define(ACCEPT_TIMEOUT, 2000).
++-define(SSL_ACCEPT_TIMEOUT, 30000).
+ 
+ listen(Ssl, Port, Opts, SslOpts) ->
+     case Ssl of
+@@ -25,14 +26,9 @@ listen(Ssl, Port, Opts, SslOpts) ->
+ accept({ssl, ListenSocket}) ->
+     % There's a bug in ssl:transport_accept/2 at the moment, which is the
+     % reason for the try...catch block. Should be fixed in OTP R14.
+-    try ssl:transport_accept(ListenSocket) of
++    try ssl:transport_accept(ListenSocket, ?ACCEPT_TIMEOUT) of
+         {ok, Socket} ->
+-            case ssl:ssl_accept(Socket) of
+-                ok ->
+-                    {ok, {ssl, Socket}};
+-                {error, _} = Err ->
+-                    Err
+-            end;
++            {ok, {ssl, Socket}};
+         {error, _} = Err ->
+             Err
+     catch
+@@ -42,6 +38,9 @@ accept({ssl, ListenSocket}) ->
+ accept(ListenSocket) ->
+     gen_tcp:accept(ListenSocket, ?ACCEPT_TIMEOUT).
+ 
++after_accept({ssl, Socket}) -> ssl:ssl_accept(Socket, ?SSL_ACCEPT_TIMEOUT);
++after_accept(_Socket) -> ok.
++
+ recv({ssl, Socket}, Length, Timeout) ->
+     ssl:recv(Socket, Length, Timeout);
+ recv(Socket, Length, Timeout) ->
+-- 
+1.8.1
+
