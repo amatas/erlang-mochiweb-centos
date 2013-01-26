@@ -1,7 +1,7 @@
 From a79466f14c6cede7f74c13e7553e5f73353cff74 Mon Sep 17 00:00:00 2001
 From: Wei Cao <cyg.cao@gmail.com>
 Date: Thu, 16 Aug 2012 10:53:07 +0800
-Subject: [PATCH 2/2] Fix Mochiweb acceptor blocked in ssl handshake
+Subject: [PATCH 2/3] Fix Mochiweb acceptor blocked in ssl handshake
 
 Acceptor cannot be recycled until ssl handshake is done,
 so it's possible and easy for all acceptors be blocked between the point

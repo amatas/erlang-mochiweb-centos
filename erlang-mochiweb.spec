@@ -7,7 +7,7 @@
 
 Name:		erlang-%{realname}
 Version:	2.4.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -18,6 +18,8 @@ Source0:	%{upstream}-%{realname}-v%{version}-%{patchnumber}-g%{git_tag}.tar.gz
 Patch1:		erlang-mochiweb-0001-96-mochifmt_records-regression.patch
 # used in CouchDB, see https://github.com/mochi/mochiweb/issues/70
 Patch2:		erlang-mochiweb-0002-Fix-Mochiweb-acceptor-blocked-in-ssl-handshake.patch
+# Backported from master
+Patch3:		erlang-mochiweb-0003-fix-mochiweb_request-regression-97.patch
 BuildRequires:	erlang-rebar
 BuildRequires:	erlang-xmerl
 Requires:	erlang-compiler%{?_isa}
@@ -42,6 +44,7 @@ An Erlang library for building lightweight HTTP servers.
 %setup -q -n %{upstream}-%{realname}-%{git_tag}
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 
 %build
@@ -106,6 +109,9 @@ rebar eunit -v
 
 
 %changelog
+* Sat Jan 26 2013 Peter Lemenkov <lemenkov@gmail.com> - 2.4.0-2
+- Fixed regression (see https://github.com/mochi/mochiweb/issues/97 )
+
 * Fri Jan 25 2013 Peter Lemenkov <lemenkov@gmail.com> - 2.4.0-1
 - Ver. 2.4.0 (fix for Erlang R16)
 - Dropped patches for EL5 (Erlang R12B)
