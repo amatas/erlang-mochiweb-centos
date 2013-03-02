@@ -1,12 +1,12 @@
 %global realname mochiweb
 %global upstream mochi
 %global debug_package %{nil}
-%global git_tag c8516e3
+%global git_tag edb954a
 %global patchnumber 0
 
 
 Name:		erlang-%{realname}
-Version:	2.4.1
+Version:	2.4.2
 Release:	1%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
@@ -14,7 +14,7 @@ License:	MIT
 URL:		http://github.com/mochi/mochiweb
 # wget --content-disposition https://github.com/mochi/mochiweb/tarball/v2.4.1
 Source0:	%{upstream}-%{realname}-v%{version}-%{patchnumber}-g%{git_tag}.tar.gz
-# used in CouchDB, see https://github.com/mochi/mochiweb/issues/70
+# Used in CouchDB, see https://github.com/mochi/mochiweb/issues/70
 Patch1:		erlang-mochiweb-0001-Fix-Mochiweb-acceptor-blocked-in-ssl-handshake.patch
 BuildRequires:	erlang-rebar
 BuildRequires:	erlang-xmerl
@@ -103,6 +103,9 @@ rebar eunit -v
 
 
 %changelog
+* Sat Mar 02 2013 Peter Lemenkov <lemenkov@gmail.com> - 2.4.2-1
+- Ver. 2.4.2
+
 * Thu Jan 31 2013 Peter Lemenkov <lemenkov@gmail.com> - 2.4.1-1
 - Ver. 2.4.1
 

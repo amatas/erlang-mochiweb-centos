@@ -1,4 +1,4 @@
-From 1ee2c6c88cf2d586480c4ccab974d04ef6bcd7fc Mon Sep 17 00:00:00 2001
+From 0317512ee588b63c57306ae76dd4352ed24f33f0 Mon Sep 17 00:00:00 2001
 From: Wei Cao <cyg.cao@gmail.com>
 Date: Thu, 16 Aug 2012 10:53:07 +0800
 Subject: [PATCH 1/1] Fix Mochiweb acceptor blocked in ssl handshake
@@ -78,5 +78,5 @@ index 76b018c..ad27204 100644
      ssl:recv(Socket, Length, Timeout);
  recv(Socket, Length, Timeout) ->
 -- 
-1.8.1
+1.8.1.4
 
