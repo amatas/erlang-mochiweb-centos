@@ -1,0 +1,25 @@
+From 92955e3f1d19e79bc41df30264da7f320964aa9e Mon Sep 17 00:00:00 2001
+From: Peter Lemenkov <lemenkov@gmail.com>
+Date: Fri, 21 Jun 2013 13:52:17 +0400
+Subject: [PATCH 2/2] Fix for Erlang R16B01
+
+Signed-off-by: Peter Lemenkov <lemenkov@gmail.com>
+---
+ src/mochiweb_socket_server.erl | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/mochiweb_socket_server.erl b/src/mochiweb_socket_server.erl
+index 029f195..24ecb49 100644
+--- a/src/mochiweb_socket_server.erl
++++ b/src/mochiweb_socket_server.erl
+@@ -141,6 +141,7 @@ start_server(F, State=#mochiweb_socket_server{ssl=Ssl, name=Name}) ->
+ 
+ prep_ssl(true) ->
+     ok = mochiweb:ensure_started(crypto),
++    ok = mochiweb:ensure_started(asn1),
+     ok = mochiweb:ensure_started(public_key),
+     ok = mochiweb:ensure_started(ssl);
+ prep_ssl(false) ->
+-- 
+1.8.2.1
+
