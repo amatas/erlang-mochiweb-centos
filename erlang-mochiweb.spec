@@ -7,7 +7,7 @@
 
 Name:		erlang-%{realname}
 Version:	2.4.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	An Erlang library for building lightweight HTTP servers
 Group:		Development/Libraries
 License:	MIT
@@ -106,6 +106,9 @@ rebar eunit -v
 
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.4.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Fri Jun 21 2013 Peter Lemenkov <lemenkov@gmail.com> - 2.4.2-2
 - Fixed issue with R16B01
 
